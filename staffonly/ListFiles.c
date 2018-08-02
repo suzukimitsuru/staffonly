@@ -20,7 +20,7 @@ int ListFiles(char *root, DEFINITION *definitions, char *path,
 	DIR *dir = opendir(path);
 	for (struct dirent *dp = readdir(dir); dp != NULL; dp = readdir(dir)) {
 		if (dp->d_name[0] != '.') {
-			char child[PATH_MAX];
+			static char child[PATH_MAX];
 			strcpy(child, path);
 			strcat(child, "/");
 			strcat(child, dp->d_name);

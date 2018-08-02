@@ -9,21 +9,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/syslimits.h>
-#include <alloca.h>
+#include <stdlib.h>
 #include "definitions.h"
 
 DEFINITION *definitionsRead(char *root) {
 	DEFINITION *definitions = NULL;
-	char filename[PATH_MAX];
+	static char filename[PATH_MAX];
 	strcpy(filename, root);
 	strcat(filename, "/.staffonly");
-	FILE *fp = fp = fopen(filename, "rt");
+	FILE *fp = fopen(filename, "rt");
 	if (fp != NULL) {
-		DEFINITION *definition = alloca(sizeof(DEFINITION));
-		FEATURE *feature = alloca(sizeof(FEATURE));
+		DEFINITION *definition = calloc(1, sizeof(DEFINITION));
+		FEATURE *feature = calloc(1, sizeof(FEATURE));
 		if (definition && feature) {
-			memset(definition, 0, sizeof(DEFINITION));
-			memset(feature, 0, sizeof(FEATURE));
 			
 			for (int number = 1; !feof(fp); number++) {
 				static char line[LINE_MAX];
@@ -48,10 +46,8 @@ DEFINITION *definitionsRead(char *root) {
 						}
 						if (include) {
 							if (feature->name[0] != '\0') {
-								feature->next = alloca(sizeof(FEATURE));
-								if (feature->next) {
-									memset(feature->next, 0, sizeof(FEATURE));
-								} else {
+								feature->next = calloc(1, sizeof(FEATURE));
+								if (!feature->next) {
 									break;
 								}
 								feature = feature->next;
@@ -63,10 +59,8 @@ DEFINITION *definitionsRead(char *root) {
 						}
 					} else {
 						if (definition->directory[0] != '\0') {
-							definition->next = alloca(sizeof(DEFINITION));
-							if (definition->next) {
-								memset(definition->next, 0, sizeof(DEFINITION));
-							} else {
+							definition->next = calloc(1, sizeof(DEFINITION));
+							if (!definition->next) {
 								break;
 							}
 							definition = definition->next;
