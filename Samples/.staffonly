@@ -1,0 +1,4 @@
+# ignore definition file
+.
+    <dirent.h>
+    <sys/stat.h>

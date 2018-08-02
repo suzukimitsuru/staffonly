@@ -5,46 +5,78 @@
 //  Created by 鈴木充 on 2018/07/13.
 //  Copyright © 2018年 鈴木充. All rights reserved.
 //
+#include <stdbool.h>
 #include <stdio.h>
-#include <dirent.h>
-#include <sys/stat.h>
 #include <string.h>
+#include <sys/syslimits.h>
+#include "language.h"
+#include "definitions.h"
+#include "ListFiles.h"
 
-#define	VAR_NAME(var)	#var
+#define	STRINGIZE(var)	#var
 
-void joinpath(char *path, const char *path1, const char *path2) {
-	strcpy(path, path1);
-	strcat(path, "/");
-	strcat(path, path2);
-	return;
-}
-
-void listfiles(char *path) {
-	DIR *dir = opendir(path);
-	for (struct dirent *dp = readdir(dir); dp != NULL; dp = readdir(dir)) {
-		if (dp->d_name[0] != '.') {
-			char path2[256];
-			joinpath(path2, path, dp->d_name);
-			struct stat fi;
-			stat(path2, &fi);
-			if (!S_ISDIR(fi.st_mode)) {
-				printf("%s\n", path2);
+static int _lint_StaffOnly(char *root, DEFINITION *definitions, char *path) {
+	int errors = 0;
+	LANGUAGE_DEFINE *language = FindLanguages(path);
+	if (language != NULL) {
+		FEATURE *features = definitionsFeatures(definitions, path);
+		if (features != NULL) {
+			FILE *fp = fp = fopen(path, "rt");
+			if (fp != NULL) {
+				size_t root_length = strlen(root);
+				for (int number = 1; !feof(fp); number++) {
+					static char line[LINE_MAX];
+					fgets(line, sizeof(line), fp);
+					char *include = language->hasInclude(line);
+					if (include != NULL) {
+						printf("%s %d: %s", &path[root_length + 1], number, line);
+						errors++;
+					}
+				}
+				fclose(fp);
 			}
 		}
 	}
-	closedir(dir);
+	return errors;
 }
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Hello, %s=%d!\n", VAR_NAME(argc), argc);
-
-	char path[256];
-	if (argc == 1) {
-		strcpy(path, ".");
+	int exit = 0;
+	bool help = false;
+	char root[PATH_MAX];
+	if (argc <= 1) {
+		strcpy(root, ".");
 	} else {
-		strcpy(path, argv[1]);
+		for (int index = 1; index < argc; index++) {
+			switch (argv[index][0]) {
+				case '-':
+					help = true;
+					break;
+				default:
+					strcpy(root, argv[index]);
+					break;
+			}
+		}
 	}
-	listfiles(path);
-	return 0;
+	if (help) {
+		printf("staffonly -- declaration lint\n");
+		printf("usage: staffonly <directory>\n\n");
+		printf("definition-file: <directory>/.staffonly\n");
+		printf("  # Example\n");
+		printf("  comm/urart\n");
+		printf("    <dirent.h>\n");
+		printf("    <sys/stat.h>\n");
+		exit = 9;
+	} else {
+		DEFINITION *definitions = definitionsRead(root);
+		int errors = ListFiles(root, definitions, root, _lint_StaffOnly);
+		if (errors > 0) {
+			printf("%d ERRORS.\n", errors);
+			exit = 1;
+		} else {
+			printf("Success.\n");
+			exit = 0;
+		}
+	}
+	return exit;
 }

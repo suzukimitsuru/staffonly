@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C50214492100A94D00E63D5F /* definitions.c in Sources */ = {isa = PBXBuildFile; fileRef = C50214482100A94D00E63D5F /* definitions.c */; };
+		C5912D8D20FDF89500291576 /* language.c in Sources */ = {isa = PBXBuildFile; fileRef = C5912D8C20FDF89500291576 /* language.c */; };
+		C5912D8F20FDFAC300291576 /* CLang.c in Sources */ = {isa = PBXBuildFile; fileRef = C5912D8E20FDFAC300291576 /* CLang.c */; };
+		C5912D9220FF6D5300291576 /* ListFiles.c in Sources */ = {isa = PBXBuildFile; fileRef = C5912D9120FF6D5300291576 /* ListFiles.c */; };
 		C5A827F120F8CEAE00983EC5 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = C5A827F020F8CEAE00983EC5 /* main.c */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +27,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C50214472100A94D00E63D5F /* definitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
+		C50214482100A94D00E63D5F /* definitions.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = definitions.c; sourceTree = "<group>"; };
+		C5912D8B20FDF4F900291576 /* language.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
+		C5912D8C20FDF89500291576 /* language.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = language.c; sourceTree = "<group>"; };
+		C5912D8E20FDFAC300291576 /* CLang.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CLang.c; sourceTree = "<group>"; };
+		C5912D9020FF6D5300291576 /* ListFiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListFiles.h; sourceTree = "<group>"; };
+		C5912D9120FF6D5300291576 /* ListFiles.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ListFiles.c; sourceTree = "<group>"; };
+		C5912D9320FF785400291576 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		C5912D9420FF787D00291576 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C5A827ED20F8CEAE00983EC5 /* staffonly */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = staffonly; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5A827F020F8CEAE00983EC5 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = main.c; path = staffonly/main.c; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -38,9 +51,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C50214462100A89100E63D5F /* languages */ = {
+			isa = PBXGroup;
+			children = (
+				C5912D8E20FDFAC300291576 /* CLang.c */,
+			);
+			path = languages;
+			sourceTree = "<group>";
+		};
 		C5A827E420F8CEAE00983EC5 = {
 			isa = PBXGroup;
 			children = (
+				C5912D9420FF787D00291576 /* README.md */,
+				C5912D9320FF785400291576 /* LICENSE */,
 				C5A827EF20F8CEAE00983EC5 /* staffonly */,
 				C5A827EE20F8CEAE00983EC5 /* Products */,
 			);
@@ -58,7 +81,14 @@
 		C5A827EF20F8CEAE00983EC5 /* staffonly */ = {
 			isa = PBXGroup;
 			children = (
+				C50214462100A89100E63D5F /* languages */,
 				C5A827F020F8CEAE00983EC5 /* main.c */,
+				C5912D8B20FDF4F900291576 /* language.h */,
+				C5912D8C20FDF89500291576 /* language.c */,
+				C5912D9020FF6D5300291576 /* ListFiles.h */,
+				C5912D9120FF6D5300291576 /* ListFiles.c */,
+				C50214472100A94D00E63D5F /* definitions.h */,
+				C50214482100A94D00E63D5F /* definitions.c */,
 			);
 			path = staffonly;
 			sourceTree = "<group>";
@@ -119,7 +149,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5912D8F20FDFAC300291576 /* CLang.c in Sources */,
 				C5A827F120F8CEAE00983EC5 /* main.c in Sources */,
+				C5912D8D20FDF89500291576 /* language.c in Sources */,
+				C50214492100A94D00E63D5F /* definitions.c in Sources */,
+				C5912D9220FF6D5300291576 /* ListFiles.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
