@@ -16,19 +16,9 @@ static LANGUAGE_DEFINE _languages[] = {
 	{"",		NULL},
 };
 
-static char *_hasExtention(char filename[]) {
-	char *result = NULL;
-	for (int index = (int)strlen(filename); index >= 0; index--) {
-		if (filename[index] == '.') {
-			result = &filename[index];
-			break;
-		}
-	}
-	return result;
-}
 LANGUAGE_DEFINE *FindLanguages(char filename[]) {
 	LANGUAGE_DEFINE *result = NULL;
-	char *extention = _hasExtention(filename);
+	char *extention = strrchr(filename, '.');
 	if (extention != NULL) {
 		for (int index = 0; _languages[index].extention[0] != '\0'; index++) {
 			if (strcasecmp(_languages[index].extention, extention) == 0) {

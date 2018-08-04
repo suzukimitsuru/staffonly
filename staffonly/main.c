@@ -29,8 +29,10 @@ static int _lint_StaffOnly(char *root, DEFINITION *definitions, char *path) {
 					fgets(line, sizeof(line), fp);
 					char *include = language->hasInclude(line);
 					if (include != NULL) {
-						printf("%s %d: %s", &path[root_length + 1], number, line);
-						errors++;
+						if (definitionsIsError(features, include)) {
+							printf("%s %d: %s", &path[root_length + 1], number, line);
+							errors++;
+						}
 					}
 				}
 				fclose(fp);

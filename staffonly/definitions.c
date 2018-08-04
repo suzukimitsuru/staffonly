@@ -86,9 +86,15 @@ FEATURE *definitionsFeatures(DEFINITION *definitions, char *path) {
 	FEATURE *features = NULL;
 	DEFINITION *definition = definitions;
 	while (definition != NULL) {
-		if (strcmp(definition->directory, path) == 0) {
-			features = definition->features;
-			break;
+		char *last = strrchr(path, '/');
+		if (last != NULL) {
+			size_t length = last - path;
+			if (strncmp(definition->directory, path, length) == 0) {
+				features = definition->features;
+				break;
+			} else {
+				definition = definition->next;
+			}
 		} else {
 			definition = definition->next;
 		}
