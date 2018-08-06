@@ -61,7 +61,7 @@ int main(int argc, const char * argv[]) {
 		}
 	}
 	if (help) {
-		printf("staffonly -- declaration lint\n");
+		printf("staffonly -- declaration lint version: 0.0.1\n");
 		printf("usage: staffonly <directory>\n\n");
 		printf("definition-file: <directory>/.staffonly\n");
 		printf("  # Example\n");
